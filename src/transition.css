@@ -1,0 +1,16 @@
+/* src/transitions.css */
+.transition-container {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.transition-container.fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.transition-container.fade-out {
+  opacity: 0;
+  transform: translateX(10px);
+}
