@@ -50,6 +50,7 @@ function ChatPage() {
   flex: 1,
   overflowY: 'auto',
   p:2,
+  pb: 10, // Spazio per l'input messaggio
   backgroundColor: '#e5ddd5', // Sfondo stile WhatsApp
   backgroundImage: 'url("https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png")',
   backgroundRepeat: 'repeat',

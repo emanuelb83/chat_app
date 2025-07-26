@@ -3,6 +3,7 @@ import { Box, TextField, IconButton, InputAdornment } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
 import { useChat } from '../context/ChatContext';
+import { b } from 'framer-motion/client';
 
 
 type Props = {
@@ -24,10 +25,12 @@ function MessageInput({ chatId }: Props) {
   sx={{
     display: 'flex',
     alignItems: 'center',
-    padding: '16px',
+    position: 'sticky',
+    bottom: '0px',
+    padding: '12px 8px',
+    zIndex: 10,
     backgroundColor: '#e5ddd5', // Stesso sfondo conversazione
-    backgroundImage: 'url("https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png")',
-    position: 'relative',
+  
     '&::before': {
       content: '""',
       position: 'absolute',

@@ -27,11 +27,11 @@ function ChatLayout() {
         <Box 
             component={motion.div}
             display="flex" 
-            height="100vh" 
+            height="100dvh" 
             width="100vw" 
             overflow="hidden"
             sx={{
-                position: 'fixed',
+                position: 'relative',
                 top: 0,
                 left: 0,
                 right: 0,
