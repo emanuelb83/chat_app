@@ -78,15 +78,22 @@ function ChatItem({ chat }: Props) {
     >
       <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
         <Box display="flex" alignItems="center" gap={2}>
-          <Avatar 
-            alt={chat.name} 
-            src={chat.picture} // Assuming a local image for simplicity
-            sx={{ 
-              width: 56, 
-              height: 56,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}
-          />
+
+<Avatar
+  alt={chat.name}
+  src={chat.picture || undefined}
+  sx={{
+    width: 56,
+    height: 56,
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    bgcolor: !chat.picture ? 'grey-600' : 'transparent',
+    color: !chat.picture ? 'white' : 'inherit',
+    fontWeight: 'bold',
+    fontSize: 24,
+  }}
+>
+  {!chat.picture && chat.name?.[0]?.toUpperCase()}
+</Avatar>
           
           <Stack sx={{ minWidth: 0, flexGrow: 1 }}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
