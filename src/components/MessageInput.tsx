@@ -3,7 +3,7 @@ import { Box, TextField, IconButton, InputAdornment } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
 import { useChat } from '../context/ChatContext';
-import { b } from 'framer-motion/client';
+
 
 
 type Props = {
