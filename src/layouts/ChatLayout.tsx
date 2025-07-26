@@ -21,7 +21,8 @@ function ChatLayout() {
         chatlog: friend.chatlog,
         lastChat: friend.lastChat || (friend.chatlog && friend.chatlog.length > 0 ? friend.chatlog[friend.chatlog.length - 1].text : ''),
         latest_timestamp: friend.latest_timestamp || (friend.chatlog && friend.chatlog.length > 0 ? friend.chatlog[friend.chatlog.length - 1].timestamp : '')
-    }));
+    })
+).sort((a, b) => new Date(b.latest_timestamp).getTime() - new Date(a.latest_timestamp).getTime());
 
     return (
         <Box 
