@@ -15,8 +15,6 @@ type ChatHeaderProps = {
 function ChatHeader({
   isMobile,
   id_chatlist,
-  picture,
-  name,
   onBack,
 }: ChatHeaderProps) {
   const id = useParams().id_chat;
@@ -63,9 +61,9 @@ function ChatHeader({
           width: 40,
           height: 40,
           mr: 2,
-          bgcolor: showInitials ? '#1976d2' : 'transparent',
+          bgcolor: showInitials ? '#acacacff' : 'transparent',
           color: showInitials ? 'white' : 'inherit',
-          fontSize: '1rem',
+          fontSize: '1,5rem',
           fontWeight: 'bold'
         }}
       >
