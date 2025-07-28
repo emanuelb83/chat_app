@@ -38,6 +38,9 @@ type ChatContextType = {
   setActiveList: (list: ChatListName) => void;
   messages: Friend[]; // messaggi della lista attiva
   sendMessage: (friendId: number, text: string) => void;
+  getContactPicture: (contactName: string) => string | null;
+  getContactById: (contactId: number) => Friend | null;
+  getContactByName: (contactName: string) => Friend | null;
 };
 
 // Type assertion dei dati dummy
@@ -85,11 +88,72 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  // Funzione per ottenere la foto di un contatto dato il nome
+  const getContactPicture = (contactName: string): string | null => {
+    // Cerca in tutte le liste
+    const allLists: ChatListName[] = ["friends", "lavoro", "famiglia"];
+
+    for (const listName of allLists) {
+      const contact = profile.chatlists[listName].find(
+        (friend) => friend.name.toLowerCase() === contactName.toLowerCase()
+      );
+
+      if (contact) {
+        return contact.picture || null;
+      }
+    }
+
+    return null;
+  };
+
+  // Funzione per ottenere un contatto dato l'ID
+  const getContactById = (contactId: number): Friend | null => {
+    const allLists: ChatListName[] = ["friends", "lavoro", "famiglia"];
+
+    for (const listName of allLists) {
+      const contact = profile.chatlists[listName].find(
+        (friend) => friend.id === contactId
+      );
+
+      if (contact) {
+        return contact;
+      }
+    }
+
+    return null;
+  };
+
+  // Funzione per ottenere un contatto dato il nome
+  const getContactByName = (contactName: string): Friend | null => {
+    const allLists: ChatListName[] = ["friends", "lavoro", "famiglia"];
+
+    for (const listName of allLists) {
+      const contact = profile.chatlists[listName].find(
+        (friend) => friend.name.toLowerCase() === contactName.toLowerCase()
+      );
+
+      if (contact) {
+        return contact;
+      }
+    }
+
+    return null;
+  };
+
   const messages = profile.chatlists[activeList];
 
   return (
     <ChatContext.Provider
-      value={{ profile, activeList, setActiveList, messages, sendMessage }}
+      value={{
+        profile,
+        activeList,
+        setActiveList,
+        messages,
+        sendMessage,
+        getContactPicture,
+        getContactById,
+        getContactByName,
+      }}
     >
       {children}
     </ChatContext.Provider>

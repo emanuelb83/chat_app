@@ -1,36 +1,24 @@
 import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import { ArrowBack, Search, AttachFile, MoreVert } from "@mui/icons-material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useChat } from "../context/ChatContext";
-
 
 type ChatHeaderProps = {
   isMobile: boolean;
   id_chatlist?: string;
-  picture?: string;
   name?: string;
   onBack?: () => void;
 };
 
-function ChatHeader({
-  isMobile,
-  id_chatlist,
-  picture,
-  name,
-  onBack,
-}: ChatHeaderProps) {
-  const id = useParams().id_chat;
-  const { messages } = useChat();
+function ChatHeader({ isMobile, id_chatlist, name, onBack }: ChatHeaderProps) {
   const navigate = useNavigate();
+  const { getContactPicture } = useChat();
 
-  const currentContact = messages.find(contact => contact.id === Number(id));
+  // Recupera la picture direttamente dal context usando il nome
+  const picture = name ? getContactPicture(name) : null;
 
-  // Usiamo questa logica per determinare cosa mostrare
-  const displayName = currentContact?.name
-  const avatarSrc = currentContact?.picture
-  console.log("Avatar Source:", avatarSrc);
-  const showInitials = !avatarSrc || avatarSrc === "";
-  const initials = displayName ? displayName.charAt(0).toUpperCase() : "";
+  console.log("Name:", name);
+  console.log("Picture from getContactPicture:", picture);
 
   const handleBack = () => {
     if (onBack) {
@@ -39,6 +27,14 @@ function ChatHeader({
       navigate(`/chatlist/${id_chatlist}`);
     }
   };
+
+  // Genera l'iniziale del nome se non c'è foto
+  const getInitial = (contactName?: string) => {
+    return contactName ? contactName.charAt(0).toUpperCase() : "?";
+  };
+
+  // Verifica se la picture è valida (non vuota e non solo spazi)
+  const isValidPicture = picture && picture.trim().length > 0;
 
   return (
     <Box
@@ -56,25 +52,18 @@ function ChatHeader({
           <ArrowBack />
         </IconButton>
       )}
-    
-      <Avatar 
-        src={!showInitials ? avatarSrc : undefined}
-        sx={{
-          width: 40,
-          height: 40,
-          mr: 2,
-          bgcolor: showInitials ? '#1976d2' : 'transparent',
-          color: showInitials ? 'white' : 'inherit',
-          fontSize: '1rem',
-          fontWeight: 'bold'
-        }}
+
+      {/* Avatar con foto o iniziale */}
+      <Avatar
+        src={isValidPicture ? picture : undefined}
+        sx={{ width: 40, height: 40, mr: 2 }}
       >
-        {showInitials && initials}
+        {!isValidPicture && getInitial(name)}
       </Avatar>
 
       <Box sx={{ flex: 1 }}>
         <Typography variant="subtitle1" fontWeight="medium">
-          {displayName || "Chat"}
+          {name || "Chat"}
         </Typography>
         <Typography variant="caption" color="text.secondary">
           online
