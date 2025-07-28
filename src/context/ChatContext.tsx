@@ -1,20 +1,14 @@
 // src/context/ChatContext.tsx
 
-import { createContext, useContext, useState } from 'react';
-import dummyDataRaw from '../data/dummyChats.json';
+import { createContext, useContext, useState } from "react";
+import dummyDataRaw from "../data/dummyChats.json";
 
 // Tipi
-// Type assertion per garantire i tipi corretti
-const dummyData = dummyDataRaw as {
-  profile: Profile;
-  friends: Friend[];
-};
-
 type Message = {
   message_id: number;
   text: string;
   timestamp: string;
-  side: 'left' | 'right'; // Ora obbligatorio
+  side: "left" | "right";
 };
 
 type Friend = {
@@ -22,80 +16,88 @@ type Friend = {
   name: string;
   picture: string;
   chatlog: Message[];
-};
-
-type ProfileFriend = Friend & { // Estende Friend
   latest_timestamp: string;
   lastChat: string;
 };
+
+export type ChatListName = "friends" | "lavoro" | "famiglia";
 
 type Profile = {
   id: number;
   name: string;
   picture: string;
   status: string;
-  friends: ProfileFriend[];
+  chatlists: {
+    [key in ChatListName]: Friend[];
+  };
 };
+
 type ChatContextType = {
   profile: Profile;
-  messages: Friend[]; // contiene chatlog
+  activeList: ChatListName;
+  setActiveList: (list: ChatListName) => void;
+  messages: Friend[]; // messaggi della lista attiva
   sendMessage: (friendId: number, text: string) => void;
 };
 
-// Context
+// Type assertion dei dati dummy
+const dummyData = dummyDataRaw as { profile: Profile };
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
-// Provider
-
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
-  const [profile, setProfile] = useState<Profile>(dummyData.profile); // anagrafica e anteprime
+  const [profile, setProfile] = useState<Profile>(dummyData.profile);
+  const [activeList, setActiveList] = useState<ChatListName>("friends");
 
-  function getLocalISOTimestamp() {
+  const getLocalISOTimestamp = () => {
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60000;
-    const localISOTime = new Date(now.getTime() - offset).toISOString().slice(0, -1);
-    return localISOTime;
-}
-  const sendMessage = (friendId: number, text: string) => {
-  const newMessage: Message = {
-    message_id: Date.now(),
-    text,
-    timestamp: getLocalISOTimestamp(),
-    side: 'right'
+    return new Date(now.getTime() - offset).toISOString().slice(0, -1);
   };
 
+  const sendMessage = (friendId: number, text: string) => {
+    const newMessage: Message = {
+      message_id: Date.now(),
+      text,
+      timestamp: getLocalISOTimestamp(),
+      side: "right",
+    };
 
+    setProfile((prevProfile) => {
+      const updatedList = prevProfile.chatlists[activeList].map((friend) =>
+        friend.id === friendId
+          ? {
+              ...friend,
+              chatlog: [...friend.chatlog, newMessage],
+              latest_timestamp: newMessage.timestamp,
+              lastChat: text,
+            }
+          : friend
+      );
 
-  // Update profile friends
-  setProfile(prevProfile => ({
-    ...prevProfile,
-    friends: prevProfile.friends.map(friend => {
-      if (friend.id === friendId) {
-        return {
-          ...friend,
-          chatlog: [...friend.chatlog, newMessage],
-          latest_timestamp: newMessage.timestamp,
-          lastChat: text
-        };
-      }
-      return friend;
-    })
-  }));
-};
+      return {
+        ...prevProfile,
+        chatlists: {
+          ...prevProfile.chatlists,
+          [activeList]: updatedList,
+        },
+      };
+    });
+  };
+
+  const messages = profile.chatlists[activeList];
 
   return (
-    // Fornisce il profilo e le funzioni per inviare messaggi
-    <ChatContext.Provider value={{ profile, messages: profile.friends, sendMessage }}>
+    <ChatContext.Provider
+      value={{ profile, activeList, setActiveList, messages, sendMessage }}
+    >
       {children}
     </ChatContext.Provider>
   );
 };
 
-
-// Hook per usare il context
 export function useChat() {
   const context = useContext(ChatContext);
-  if (!context) throw new Error('useChat must be used within a ChatProvider');
+  if (!context) throw new Error("useChat must be used within a ChatProvider");
   return context;
 }
