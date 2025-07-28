@@ -33,11 +33,7 @@ function ChatPage() {
       }}
     >
       {/* Header */}
-      <ChatHeader
-        isMobile={isMobile}
-        //picture={currentChat?.picture && currentChat.name?.[0]?.toUpperCase()}
-        name={currentChat?.name}
-      />
+      <ChatHeader isMobile={isMobile} name={currentChat?.name} />
 
       {/* Area messaggi */}
       <Box
