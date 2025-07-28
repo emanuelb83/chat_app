@@ -1,54 +1,74 @@
 {
-  "profile": {              
+  "profile": {
     "id": 1,
     "name": "Mario Rossi",
     "picture": "https://example.com/mario.jpg",
     "status": "online",
-    "friends": [
-      {
-        "id": 2,
-        "name": "Luigi Verdi",
-        "picture": "/LuigiVerdi.jpg",
-        "latest_timestamp": "2023-05-20T10:30:00Z",
-        "lastChat": "Ciao, come va?",
-        "chatlog": [
-          {
-            "message_id": 1,
-            "text": "Ciao, come va?",
-            "timestamp": "2023-05-20T10:30:00Z",
-            "side": "left"
-          },
-          {
-            "message_id": 2,
-            "text": "Tutto bene, grazie!",
-            "timestamp": "2023-05-20T10:32:00Z",
-            "side": "right"
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Anna Bianchi",
-        "picture": "/AnnaBianchi.jpg",
-        "latest_timestamp": "2023-05-19T09:15:00Z",
-        "lastChat": "Domani ci vediamo",
-        "chatlog": [
-          {
-            "message_id": 1,
-            "text": "Domani ci vediamo",
-            "timestamp": "2023-05-19T09:15:00Z",
-            "side": "left"
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "name": "Giovanni Neri",
-        "picture": "",
-        "latest_timestamp": "2023-05-18T16:45:00Z",
-        "lastChat": "Ti chiamo più tardi",
-        "chatlog": [] 
-      }
-    ]
+    "chatlists": {
+      "friends": [
+        {
+          "id": 2,
+          "name": "Luigi Verdi",
+          "picture": "/LuigiVerdi.jpg",
+          "latest_timestamp": "2023-05-20T10:30:00Z",
+          "lastChat": "Ciao, come va?",
+          "chatlog": [
+            {
+              "message_id": 1,
+              "text": "Ciao, come va?",
+              "timestamp": "2023-05-20T10:30:00Z",
+              "side": "left"
+            },
+            {
+              "message_id": 2,
+              "text": "Tutto bene, grazie!",
+              "timestamp": "2023-05-20T10:32:00Z",
+              "side": "right"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Anna Bianchi",
+          "picture": "/AnnaBianchi.jpg",
+          "latest_timestamp": "2023-05-19T09:15:00Z",
+          "lastChat": "Domani ci vediamo",
+          "chatlog": [
+            {
+              "message_id": 1,
+              "text": "Domani ci vediamo",
+              "timestamp": "2023-05-19T09:15:00Z",
+              "side": "left"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Giovanni Neri",
+          "picture": "",
+          "latest_timestamp": "2023-05-18T16:45:00Z",
+          "lastChat": "Ti chiamo più tardi",
+          "chatlog": []
+        }
+      ],
+      "lavoro": [
+        {
+          "id": 5,
+          "name": "Ida Bracci",
+          "picture": "/.jpg",
+          "latest_timestamp": "2023-05-19T09:15:00Z",
+          "lastChat": "Fisso la call per dopodomani, ok?",
+          "chatlog": [
+            {
+              "message_id": 1,
+              "text": "Fisso la call per dopodomani, ok?",
+              "timestamp": "2023-05-19T09:15:00Z",
+              "side": "left"
+            }
+          ]
+        }
+      ],
+      "famiglia": []
+    }
   }
 }

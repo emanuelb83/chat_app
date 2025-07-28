@@ -2,7 +2,7 @@
 export type Message = {
   text: string;
   timestamp: string;
-  side: 'left' | 'right';
+  side: "left" | "right";
   message_id: number;
 };
 
@@ -21,12 +21,15 @@ export type Profile = {
   name: string;
   picture: string;
   status: string;
-  chatlog: Message[]; // chat completa
-};
+  friends: Friend[];
+  lavoro: Friend[];
+  famiglia: Friend[];
+} & Record<ChatListName, Friend[]>;
+
 // Profilo Completo con amici
 export type ChatData = {
   profile: Profile;
   friends: Friend[]; // Elenco dei friends con chat
 };
 
-
+export type ChatListName = "friends" | "lavoro" | "famiglia";
