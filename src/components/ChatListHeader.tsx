@@ -1,17 +1,29 @@
 import { AppBar, Toolbar, Typography } from '@mui/material';
+import { useChat } from '../context/ChatContext';   
 
-interface ChatListHeaderProps {
-    title: string;
-    logo?: string; // Aggiunto per eventuale logo
-}
 
-function ChatListHeader({ title }: ChatListHeaderProps) {
+function ChatListHeader() {
+    const { activeList } = useChat();
+    
+    // Mappa i valori di activeList ai titoli desiderati
+    const getTitle = () => {
+        switch(activeList) {
+            case 'friends':
+                return 'Amici';
+            case 'lavoro':
+                return 'Lavoro';
+            case 'famiglia':
+                return 'Famiglia';
+            default:
+                return 'Chat';
+        }
+    }
     return (
         
         <AppBar position="static" color="default" elevation={1}>
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    {title}
+                <Typography component="div" sx={{ flexGrow: 1, fontWeight: 'bold', fontSize: '1.5rem', textAlign: 'center' }}>
+                    {getTitle()}
                 </Typography>
             </Toolbar>
         </AppBar>

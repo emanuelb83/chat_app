@@ -1,7 +1,8 @@
 import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import { ArrowBack, Search, AttachFile, MoreVert } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useChat } from "../context/ChatContext";
+
 
 type ChatHeaderProps = {
   isMobile: boolean;
@@ -10,7 +11,6 @@ type ChatHeaderProps = {
   name?: string;
   onBack?: () => void;
 };
-console.log(useContext);
 
 function ChatHeader({
   isMobile,
@@ -19,7 +19,18 @@ function ChatHeader({
   name,
   onBack,
 }: ChatHeaderProps) {
+  const id = useParams().id_chat;
+  const { messages } = useChat();
   const navigate = useNavigate();
+
+  const currentContact = messages.find(contact => contact.id === Number(id));
+
+  // Usiamo questa logica per determinare cosa mostrare
+  const displayName = currentContact?.name
+  const avatarSrc = currentContact?.picture
+  console.log("Avatar Source:", avatarSrc);
+  const showInitials = !avatarSrc || avatarSrc === "";
+  const initials = displayName ? displayName.charAt(0).toUpperCase() : "";
 
   const handleBack = () => {
     if (onBack) {
@@ -45,12 +56,25 @@ function ChatHeader({
           <ArrowBack />
         </IconButton>
       )}
-
-      <Avatar src={picture} sx={{ width: 40, height: 40, mr: 2 }} />
+    
+      <Avatar 
+        src={!showInitials ? avatarSrc : undefined}
+        sx={{
+          width: 40,
+          height: 40,
+          mr: 2,
+          bgcolor: showInitials ? '#1976d2' : 'transparent',
+          color: showInitials ? 'white' : 'inherit',
+          fontSize: '1rem',
+          fontWeight: 'bold'
+        }}
+      >
+        {showInitials && initials}
+      </Avatar>
 
       <Box sx={{ flex: 1 }}>
         <Typography variant="subtitle1" fontWeight="medium">
-          {name || "Chat"}
+          {displayName || "Chat"}
         </Typography>
         <Typography variant="caption" color="text.secondary">
           online

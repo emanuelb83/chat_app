@@ -38,7 +38,7 @@ function ChatListSelector() {
   }, [id_chatlist, setActiveList]);
 
   return (
-    <Box mb={2} px={2}>
+    <Box mb={2} mt={2} px={2}>
       <Typography variant="subtitle2" gutterBottom>
         Seleziona gruppo chat
       </Typography>

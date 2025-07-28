@@ -8,6 +8,7 @@ import ChatListSelector from "../components/ChatListSelector"; // Corretto il no
 import EmptyChat from "../pages/EmptyChat";
 import { useEffect } from "react";
 import type { ChatListName } from "../types";
+import ChatListHeader from "../components/ChatListHeader";
 
 function ChatLayout() {
   const isMobile = useMediaQuery((theme: Theme) =>
@@ -80,6 +81,7 @@ function ChatLayout() {
             }}
           >
             <Box sx={{ flex: 1, overflow: "auto" }}>
+              <ChatListHeader title="Chat List Header"/>
               <ChatListSelector />
               <ChatList chats={messages} />
             </Box>
