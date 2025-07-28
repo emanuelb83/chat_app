@@ -26,7 +26,6 @@ function ChatHeader({
   // Usiamo questa logica per determinare cosa mostrare
   const displayName = currentContact?.name
   const avatarSrc = currentContact?.picture
-  console.log("Avatar Source:", avatarSrc);
   const showInitials = !avatarSrc || avatarSrc === "";
   const initials = displayName ? displayName.charAt(0).toUpperCase() : "";
 

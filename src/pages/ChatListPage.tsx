@@ -11,7 +11,7 @@ function ChatListPage() {
   return (
     <Box>
       <List>
-        {profile.friends.map((friend) => (
+        {profile.chatlists.friends.map((friend) => (
           <ListItemButton
             key={friend.id}
             onClick={() => navigate(`/chatlist/${profile.id}/chat/${friend.id}`)}
